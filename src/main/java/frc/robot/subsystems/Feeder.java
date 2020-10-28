@@ -26,17 +26,45 @@ public class Feeder
     /**
      * Goes fast, slow, or not at all depending on the controller input
      */
-    public void teleOp() 
+    // public void teleOp() 
+    // {
+    //     if (controller.getBumperReleased(Hand.kRight))
+    //     {
+    //         feedMotor.set(1);
+    //     } else if(controller.getBumperReleased(Hand.kLeft))
+    //     {
+    //         feedMotor.set(0.3);
+    //     } else
+    //     {
+    //         feedMotor.set(0);
+    //     }
+    // }
+
+    /**
+     * turns on the feeder
+     */
+    public void feed()
     {
-        if (controller.getBumperReleased(Hand.kRight))
-        {
-            feedMotor.set(1);
-        } else if(controller.getBumperReleased(Hand.kLeft))
-        {
-            feedMotor.set(0.3);
-        } else
-        {
-            feedMotor.set(0);
-        }
+        feedMotor.set(1);
     }
+
+    /**
+     * turns on the feeder
+     * @param power the specificed power
+     */
+    public void feed(double power)
+    {
+        feedMotor.set(power);
+        //gian wrote this beautifully crafted method
+        // 😎✔✔ :^
+    }
+    
+     /**
+      * turns off the feeder
+      */
+    public void stopMotor() 
+    {
+        feedMotor.set(0);
+    }
+
 }

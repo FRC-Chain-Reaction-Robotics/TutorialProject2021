@@ -13,7 +13,10 @@ public class Constants
     public final static int CONTROL_MOTOR_ID = 6;
     public final static int INTAKE_MOTOR_ID = 7;
     public final static int LIFT_MOTOR_ID = 8;
-    public final static int SHOOTER_MOTOR_ID = 9;
+    public final static int LIFT_MOTOR2_ID = 9;
+    public final static int LIFT_MOTOR3_ID = 10;
+
+    public final static int SHOOTER_MOTOR_ID = 11;
     
 	public final static Port COLOR_SENSOR_ID = Port.kOnboard;
 }
