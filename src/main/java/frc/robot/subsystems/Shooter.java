@@ -17,9 +17,6 @@ public class Shooter
     CANSparkMax leftShooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_ID, MotorType.kBrushless);
     CANSparkMax rightShooterMotor = new CANSparkMax(Constants.SHOOTER_MOTOR_ID, MotorType.kBrushless);
     
-
-
-
     public Shooter(XboxController x)
     {
         controller = x;

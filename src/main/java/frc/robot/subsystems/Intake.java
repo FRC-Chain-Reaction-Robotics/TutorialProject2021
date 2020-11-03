@@ -1,19 +1,19 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 
 public class Intake {
-    XboxController controller;
-    PWMVictorSPX intakeMotor;
+    CANSparkMax intakeMotor;
     
     /** 
-     * Constructs the intake motor along with the Xbox Controller.
+     * Constructs the intake motor 
      */
-    public Intake(XboxController x) {
-        controller = x;
-        intakeMotor = new PWMVictorSPX(Constants.INTAKE_MOTOR_ID);
+    public Intake() {
+        intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushless);
     }
 
     // public void teleOp()    
@@ -35,7 +35,7 @@ public class Intake {
     // }
     
     /**
-     * turn on intake
+     * Turns on the intake motor
          */
     public void intake()
     {
@@ -44,7 +44,7 @@ public class Intake {
     }
         
     /**
-    * turns on the intake
+    * Turns on the intake motor
     * @param power the specificed power
     */
     public void intake(double power)

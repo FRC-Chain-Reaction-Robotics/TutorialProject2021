@@ -6,7 +6,8 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.util.Color;
@@ -18,7 +19,7 @@ import frc.robot.Constants;
 public class ControlPanel {
     
     private XboxController controller;
-    private PWMVictorSPX panelMotor;
+    private CANSparkMax panelMotor;
 
     private ColorSensorV3 colorSensor;
     private final ColorMatch colorMatcher = new ColorMatch();
@@ -28,13 +29,13 @@ public class ControlPanel {
     private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
     
-    private final ArrayList<Color> colors;
+    private final ArrayList<Color> colors = new ArrayList<>();
     
     public Color gameColor = null;
 
     private Timer timer = new Timer();
     private boolean hasAlreadyStarted;
-     
+    
     /**
      * Constructs a ControlPanel object.
      * @param x the XboxController
@@ -42,8 +43,9 @@ public class ControlPanel {
     public ControlPanel(XboxController x)
     {
         controller = x;
-        panelMotor = new PWMVictorSPX(Constants.CONTROL_MOTOR_ID);
+        panelMotor = new CANSparkMax(Constants.CONTROL_MOTOR_ID, MotorType.kBrushless); 
         colorSensor = new ColorSensorV3(Constants.COLOR_SENSOR_ID);
+      
         
         colorMatcher.addColorMatch(kBlueTarget);
         colorMatcher.addColorMatch(kGreenTarget);

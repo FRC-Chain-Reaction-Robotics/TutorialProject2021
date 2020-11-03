@@ -61,9 +61,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
 
     liftControl = new Lift(operatorController);
-    intakeControl = new Intake(operatorController);
+    intakeControl = new Intake();
     shooterControl = new Shooter(operatorController);
-    feedControl = new Feeder(operatorController);
+    //feedControl = new Feeder();
     controlPanel = new ControlPanel(operatorController);
   }
 

@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import frc.robot.Constants;
 
 /**
@@ -10,17 +10,15 @@ import frc.robot.Constants;
  */
 public class Feeder 
 {
-    XboxController controller;
-    PWMVictorSPX feedMotor;
+    CANSparkMax feedMotor;
 
     /**
      * Constructs a new Feeder with one motor and a controller.
      * @param x the controller
      */
-    public Feeder(XboxController x) 
+    public Feeder() 
     {
-        controller = x;
-        feedMotor = new PWMVictorSPX(Constants.FEEDER_MOTOR_ID); 
+        feedMotor = new CANSparkMax(Constants.FEEDER_MOTOR_ID, MotorType.kBrushless);
     }
 
     /**

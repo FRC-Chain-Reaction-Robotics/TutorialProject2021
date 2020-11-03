@@ -1,26 +1,28 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.XboxController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 //imports here
 import frc.robot.Constants;
 
 public class Lift 
 {
     XboxController controller;
-    PWMVictorSPX liftMotor;
-    PWMVictorSPX liftMotor2;
-    PWMVictorSPX liftMotor3;    
+    CANSparkMax liftMotor;
+    CANSparkMax liftMotor2;
+    CANSparkMax liftMotor3;    
 
     public Lift(XboxController x)
     {
         
         controller = x;
-        liftMotor = new PWMVictorSPX(Constants.LIFT_MOTOR_ID); 
-        liftMotor2 = new PWMVictorSPX(Constants.LIFT_MOTOR2_ID);
-        liftMotor3 = new PWMVictorSPX(Constants.LIFT_MOTOR3_ID);
+        liftMotor = new CANSparkMax(Constants.LIFT_MOTOR_ID, MotorType.kBrushless);
+        liftMotor2 = new CANSparkMax(Constants.LIFT_MOTOR2_ID, MotorType.kBrushless);
+        liftMotor3 = new CANSparkMax(Constants.LIFT_MOTOR3_ID, MotorType.kBrushless);
     }
-
+    
     // public void teleOp()
     // {
     //     if( controller.getXButton() ) 
