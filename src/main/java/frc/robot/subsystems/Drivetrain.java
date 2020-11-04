@@ -37,6 +37,6 @@ public class Drivetrain {
      */
     public void drive()
     {
-        dt.arcadeDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight));
+        dt.arcadeDrive(.5*driverController.getY(Hand.kLeft), -.5*driverController.getX(Hand.kRight));
     }
 } 

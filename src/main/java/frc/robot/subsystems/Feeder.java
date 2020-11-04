@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.robot.Constants;
 
@@ -10,7 +10,7 @@ import frc.robot.Constants;
  */
 public class Feeder 
 {
-    CANSparkMax feedMotor;
+    TalonSRX feedMotor;
 
     /**
      * Constructs a new Feeder with one motor and a controller.
@@ -18,7 +18,7 @@ public class Feeder
      */
     public Feeder() 
     {
-        feedMotor = new CANSparkMax(Constants.FEEDER_MOTOR_ID, MotorType.kBrushless);
+        feedMotor = new TalonSRX(Constants.FEEDER_MOTOR_ID);
     }
 
     /**
@@ -43,7 +43,7 @@ public class Feeder
      */
     public void feed()
     {
-        feedMotor.set(1);
+        feedMotor.set(ControlMode.PercentOutput, 1);
     }
 
     /**
@@ -52,9 +52,9 @@ public class Feeder
      */
     public void feed(double power)
     {
-        feedMotor.set(power);
+        feedMotor.set(ControlMode.PercentOutput, 1);
         //gian wrote this beautifully crafted method
-        // 😎✔✔ :^
+        // 😎✔✔ :^)
     }
     
      /**
@@ -62,7 +62,7 @@ public class Feeder
       */
     public void stopMotor() 
     {
-        feedMotor.set(0);
+        feedMotor.set(ControlMode.PercentOutput, 0);
     }
 
 }

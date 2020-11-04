@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -8,12 +9,16 @@ import frc.robot.Constants;
 
 public class Intake {
     CANSparkMax intakeMotor;
+    CANSparkMax leftHopperMotor;
+    TalonSRX rightHopperMotor;
     
     /** 
      * Constructs the intake motor 
      */
     public Intake() {
-        intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+        intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushed);
+        leftHopperMotor = new CANSparkMax(Constants.LEFT_HOPPER_MOTOR_ID, MotorType.kBrushed);
+        rightHopperMotor = new TalonSRX(Constants.RIGHT_HOPPER_MOTOR_ID);
     }
 
     // public void teleOp()    

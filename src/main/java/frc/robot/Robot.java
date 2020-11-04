@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -31,17 +33,6 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
-
-  private static PWMVictorSPX lf = new PWMVictorSPX(Constants.LF_MOTOR_ID);
-  private static PWMVictorSPX lb = new PWMVictorSPX(Constants.LB_MOTOR_ID);
-  private static PWMVictorSPX rf = new PWMVictorSPX(Constants.RF_MOTOR_ID);
-  private static PWMVictorSPX rb = new PWMVictorSPX(Constants.RB_MOTOR_ID);
-  
-  private static SpeedControllerGroup leftSide = new SpeedControllerGroup(lf, lb);
-  private static SpeedControllerGroup rightSide = new SpeedControllerGroup(rf, rb);
-
-  DifferentialDrive dt = new DifferentialDrive(leftSide, rightSide);
   XboxController driverController = new XboxController(0);
   XboxController operatorController = new XboxController(1);  
   
@@ -50,6 +41,7 @@ public class Robot extends TimedRobot {
   Shooter shooterControl;
   Feeder feedControl;
   ControlPanel controlPanel;
+  Drivetrain dt = new Drivetrain(driverController);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -60,18 +52,18 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    liftControl = new Lift(operatorController);
+    //liftControl = new Lift(operatorController);
     intakeControl = new Intake();
     shooterControl = new Shooter(operatorController);
     //feedControl = new Feeder();
-    controlPanel = new ControlPanel(operatorController);
+    //controlPanel = new ControlPanel(operatorController);
   }
 
   @Override
   public void robotPeriodic()
   {
-    if(controlPanel.gameColor == null)
-      controlPanel.getGameColor();
+    // if(controlPanel.gameColor == null)
+      // controlPanel.getGameColor();
   }
 
   /**
@@ -114,6 +106,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic()
   {
-    dt.arcadeDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight));
+    dt.drive();
   }
 }
