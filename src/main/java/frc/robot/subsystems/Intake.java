@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 
 public class Intake {
@@ -19,6 +19,7 @@ public class Intake {
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushed);
         leftHopperMotor = new CANSparkMax(Constants.LEFT_HOPPER_MOTOR_ID, MotorType.kBrushed);
         rightHopperMotor = new TalonSRX(Constants.RIGHT_HOPPER_MOTOR_ID);
+
     }
 
     // public void teleOp()    
@@ -44,7 +45,7 @@ public class Intake {
          */
     public void intake()
     {
-        intakeMotor.set(1);
+        intake(1);
         //second method beautifully crafted by the one and only gian, absoulutely not basic java. advanced stuff.
     }
         
@@ -54,7 +55,9 @@ public class Intake {
     */
     public void intake(double power)
     {
-        intakeMotor.set(power);
+        intakeMotor.set(-power*.5);
+        leftHopperMotor.set(-power*.5);
+        rightHopperMotor.set(ControlMode.PercentOutput, -power*.5);
     }
 
     /**
@@ -62,7 +65,7 @@ public class Intake {
     */   
     public void stopMotor()
     {
-        intakeMotor.set(0);
+        intake(0);
     }
 }
 

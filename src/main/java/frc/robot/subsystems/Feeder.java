@@ -19,6 +19,7 @@ public class Feeder
     public Feeder() 
     {
         feedMotor = new TalonSRX(Constants.FEEDER_MOTOR_ID);
+        feedMotor.setInverted(true);
     }
 
     /**

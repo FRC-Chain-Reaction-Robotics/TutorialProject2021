@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     //liftControl = new Lift(operatorController);
     intakeControl = new Intake();
     shooterControl = new Shooter(operatorController);
-    //feedControl = new Feeder();
+    feedControl = new Feeder();
     //controlPanel = new ControlPanel(operatorController);
   }
 
@@ -107,5 +107,17 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic()
   {
     dt.drive();
+
+    if (driverController.getAButton())
+      feedControl.feed();
+    else 
+      feedControl.stopMotor();
+
+    if (driverController.getXButton())
+      intakeControl.intake();
+    else
+      intakeControl.stopMotor();
+
+
   }
 }

@@ -16,7 +16,8 @@ public class Shooter
     
     CANSparkMax leftShooterMotor = new CANSparkMax(Constants.LEFT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     CANSparkMax rightShooterMotor = new CANSparkMax(Constants.RIGHT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
-    
+    CANPIDController lpidController = leftShooterMotor.getPIDController();
+
     public Shooter(XboxController x)
     {
         controller = x;
@@ -39,8 +40,9 @@ public class Shooter
      */
     public void shoot()
     {
-        leftShooterMotor.set(1);
-        rightShooterMotor.set(1);
+        leftShooterMotor.set(.5);
+        rightShooterMotor.set(.5);
+        lpidController.setReference(1600, ControlType.kVelocity);
     }
 
     /**
