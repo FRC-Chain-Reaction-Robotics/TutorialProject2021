@@ -35,4 +35,12 @@ public class Shooter
     {
         lpidController.setReference(0, ControlType.kVelocity);
     }
+
+	public double getVelocity() {
+		return leftShooterMotor.getEncoder().getVelocity();
+	}
+
+	public double getSetpoint() {
+		return leftShooterMotor.get();
+	}
 }

@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -97,6 +98,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic()
   {
+    SmartDashboard.putNumber("limelight tx", ll.getTx());
+    SmartDashboard.putNumber("limelight ty", ll.getTy());
+    SmartDashboard.putBoolean("limelight tv", ll.getTv());
+    SmartDashboard.putNumber("limelight ta", ll.getTa());
+    SmartDashboard.putNumber("shooter rpm", shooterControl.getVelocity());
+    SmartDashboard.putNumber("shooter setpoint", shooterControl.getSetpoint());
+
+    System.out.println("tee ecks : " + ll.getTx());
+
     if (operatorController.getAButton())
       feedControl.feed();
     else 
