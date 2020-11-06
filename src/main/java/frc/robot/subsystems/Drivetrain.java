@@ -22,7 +22,8 @@ public class Drivetrain
 
     Limelight limelight;
 
-    PIDController aimPID = new PIDController(1, 0, 0);
+    PIDController aimPID = new PIDController(0.035, 0, 0);
+    PIDController distPID = new PIDController(0.05, 0, 0);
 
     /**
      * Constructs a drivetrain
@@ -31,7 +32,8 @@ public class Drivetrain
     public Drivetrain(Limelight limelight)
     {
         this.limelight = limelight;
-    }
+        dt.setMaxOutput(0.4);
+    } 
     
     /**
      * Drives 
@@ -45,6 +47,9 @@ public class Drivetrain
      */
     public void aim()
     {
-        dt.arcadeDrive(0, aimPID.calculate(limelight.getTx(), 0));
+        dt.arcadeDrive(
+            distPID.calculate(limelight.getTy(), 0),
+            aimPID.calculate(limelight.getTx(), 0)
+        );
     }
 } 

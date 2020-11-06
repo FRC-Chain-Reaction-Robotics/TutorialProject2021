@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   {
     // if(controlPanel.gameColor == null)
       // controlPanel.getGameColor();
+    ll.Update();
   }
 
   /**
@@ -120,10 +121,13 @@ public class Robot extends TimedRobot {
     if (operatorController.getBButton())
     {
         dt.aim();
-        shooterControl.shoot();
+        // shooterControl.shoot();
     }
-    else    
-        dt.drive(.5*driverController.getY(Hand.kLeft), -.5*driverController.getX(Hand.kRight));
+    else
+    {
+      dt.drive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight));
+      shooterControl.stopShooter();
+    }
   
     
     // //#region ControlPanel

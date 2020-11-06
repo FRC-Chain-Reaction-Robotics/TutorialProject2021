@@ -12,12 +12,11 @@ public class Shooter
     
     CANSparkMax leftShooterMotor = new CANSparkMax(Constants.LEFT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     CANSparkMax rightShooterMotor = new CANSparkMax(Constants.RIGHT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
-    CANPIDController lpidController = leftShooterMotor.getPIDController();
+    // CANPIDController lpidController = leftShooterMotor.getPIDController();
 
     public Shooter()
     {
-        rightShooterMotor.setInverted(true);
-        rightShooterMotor.follow(leftShooterMotor);
+        rightShooterMotor.follow(leftShooterMotor, false);
     }
 
     /**
@@ -25,7 +24,8 @@ public class Shooter
      */
     public void shoot()
     {
-        lpidController.setReference(1375, ControlType.kVelocity);
+        // lpidController.setReference(13, ControlType.kVelocity);
+        leftShooterMotor.set(0.3);
     }
 
     /**
@@ -33,7 +33,8 @@ public class Shooter
       */
     public void stopShooter() //sooter kekw
     {
-        lpidController.setReference(0, ControlType.kVelocity);
+        // lpidController.setReference(0, ControlType.kVelocity);
+        leftShooterMotor.set(0);
     }
 
 	public double getVelocity() {
