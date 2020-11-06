@@ -4,13 +4,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants;
 
-public class Drivetrain {
-
+public class Drivetrain
+{
     private static CANSparkMax lf = new CANSparkMax(Constants.LF_MOTOR_ID, MotorType.kBrushless); 
     private static CANSparkMax lb = new CANSparkMax(Constants.LB_MOTOR_ID, MotorType.kBrushless);
     private static CANSparkMax rf = new CANSparkMax(Constants.RF_MOTOR_ID, MotorType.kBrushless);
@@ -21,22 +20,31 @@ public class Drivetrain {
   
     DifferentialDrive dt = new DifferentialDrive(leftSide, rightSide);
 
-    XboxController driverController;
+    Limelight limelight;
+
+    PIDController aimPID = new PIDController(1, 0, 0);
 
     /**
      * Constructs a drivetrain
-     * @param driverController the driver controller
+     * @param limelight the limelight 
      */
-    public Drivetrain(XboxController driverController)
+    public Drivetrain(Limelight limelight)
     {
-        this.driverController = driverController; 
+        this.limelight = limelight;
     }
     
     /**
-     * drives 
+     * Drives 
      */
-    public void drive()
+    public void drive(double xSpeed, double zRotation)
     {
-        dt.arcadeDrive(.5*driverController.getY(Hand.kLeft), -.5*driverController.getX(Hand.kRight));
+        dt.arcadeDrive(xSpeed, zRotation);
+    }
+    /**
+     * Aims the robot
+     */
+    public void aim()
+    {
+        dt.arcadeDrive(0, aimPID.calculate(limelight.getTx(), 0));
     }
 } 

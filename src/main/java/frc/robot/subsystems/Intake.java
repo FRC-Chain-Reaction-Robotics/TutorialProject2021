@@ -22,24 +22,6 @@ public class Intake {
 
     }
 
-    // public void teleOp()    
-    // {
-    //     //#region Intake
-    //     if(controller.getXButton())
-    //         intakeMotor.set(1);
-    //     else if(controller.getYButton())
-    //         intakeMotor.set (-1);
-    //     else
-    //         intakeMotor.set (0);
-    //     //#endregion Intake
-
-    //     //#region Hopper
-        
-    //     //#endregion Hopper
-
-        
-    // }
-    
     /**
      * Turns on the intake motor
          */

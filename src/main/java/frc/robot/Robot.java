@@ -7,12 +7,6 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -33,15 +27,18 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
   XboxController driverController = new XboxController(0);
   XboxController operatorController = new XboxController(1);  
   
   Lift liftControl;
-  Intake intakeControl;
-  Shooter shooterControl;
-  Feeder feedControl;
-  ControlPanel controlPanel;
-  Drivetrain dt = new Drivetrain(driverController);
+  Intake intakeControl = new Intake();
+  Shooter shooterControl = new Shooter();
+  Feeder feedControl = new Feeder();
+  ControlPanel controlPanel = new ControlPanel();
+  Limelight ll = new Limelight();
+  Drivetrain dt = new Drivetrain(ll);
+  
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -51,12 +48,6 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-
-    //liftControl = new Lift(operatorController);
-    intakeControl = new Intake();
-    shooterControl = new Shooter(operatorController);
-    feedControl = new Feeder();
-    //controlPanel = new ControlPanel(operatorController);
   }
 
   @Override
@@ -106,18 +97,39 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic()
   {
-    dt.drive();
-
-    if (driverController.getAButton())
+    if (operatorController.getAButton())
       feedControl.feed();
     else 
       feedControl.stopMotor();
 
-    if (driverController.getXButton())
+    if (operatorController.getXButton())
       intakeControl.intake();
     else
       intakeControl.stopMotor();
+      
+    if (operatorController.getBButton())
+    {
+        dt.aim();
+        shooterControl.shoot();
+    }
+    else    
+        dt.drive(.5*driverController.getY(Hand.kLeft), -.5*driverController.getX(Hand.kRight));
+  
+    
+    // //#region ControlPanel
+    // if(controller.getAButton() && !controller.getBButton())
+    //     rotationControl();
+    // else if(controller.getBButton() && !controller.getAButton())
+    //     positionControl();
+    // //#endregion
+    
 
-
-  }
+    // // TODO: actually call the lift methods
+    // if(operatorController.getPOV() == 0) 
+    //   liftControl.up();
+    // else if(operatorController.getPOV() == 180) 
+    //   liftControl.down();
+    // else 
+    //   liftControl. // there are so many methods wth? limit switch much??
+  }  
 }

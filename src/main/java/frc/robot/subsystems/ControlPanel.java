@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 
@@ -18,7 +18,7 @@ import frc.robot.Constants;
  */
 public class ControlPanel {
     
-    private XboxController controller;
+    
     private CANSparkMax panelMotor;
 
     private ColorSensorV3 colorSensor;
@@ -38,11 +38,9 @@ public class ControlPanel {
     
     /**
      * Constructs a ControlPanel object.
-     * @param x the XboxController
      */
-    public ControlPanel(XboxController x)
+    public ControlPanel()
     {
-        controller = x;
         panelMotor = new CANSparkMax(Constants.CONTROL_MOTOR_ID, MotorType.kBrushless); 
         colorSensor = new ColorSensorV3(Constants.COLOR_SENSOR_ID);
       
@@ -55,23 +53,15 @@ public class ControlPanel {
         colors.add(kGreenTarget);
         colors.add(kBlueTarget);
         colors.add(kYellowTarget);
+    
     }
     
-    
-    public void teleOp()
-    { 
-        //#region ControlPanel
-        if(controller.getAButton() && !controller.getBButton())
-            rotationControl();
-        else if(controller.getBButton() && !controller.getAButton())
-            positionControl();
-        //#endregion
-    }
+ 
 
     /**
      * wheel go spin (but only 3-5 times
      */
-    private void rotationControl()
+    public void rotationControl()
     {
         double startTime = 0.0;
         if(!hasAlreadyStarted) {
@@ -92,7 +82,7 @@ public class ControlPanel {
     /**
      * wheel spins, but not that much
      */
-    private void positionControl()
+    public void positionControl()
     {
         //this is the color the robot sees - which is offset from what the field sees
         Color color = colors.get((colors.indexOf(gameColor) + 2)  % colors.size()); //the modulo is so that if it's above the length, it loops back to the beginning of the array
