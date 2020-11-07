@@ -102,11 +102,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limelight tx", ll.getTx());
     SmartDashboard.putNumber("limelight ty", ll.getTy());
     SmartDashboard.putBoolean("limelight tv", ll.getTv());
-    SmartDashboard.putNumber("limelight ta", ll.getTa());
+    
     SmartDashboard.putNumber("shooter rpm", shooterControl.getVelocity());
     SmartDashboard.putNumber("shooter setpoint", shooterControl.getSetpoint());
-
-    System.out.println("tee ecks : " + ll.getTx());
 
     if (operatorController.getAButton())
       feedControl.feed();
