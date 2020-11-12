@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 /**
@@ -10,7 +13,15 @@ import frc.robot.Constants;
  */
 public class Feeder 
 {
-    TalonSRX feedMotor;
+    TalonSRX feedMotor = new TalonSRX(Constants.FEEDER_MOTOR_ID);
+    
+    DigitalInput bottom = new DigitalInput(0); 
+    DigitalInput middle = new DigitalInput(1);
+    DigitalInput top = new DigitalInput(2);
+
+    DigitalInput[] inputs = {bottom,middle,top};
+    
+    int numBalls = 0;
 
     /**
      * Constructs a new Feeder with one motor and a controller.
@@ -18,16 +29,63 @@ public class Feeder
      */
     public Feeder() 
     {
-        feedMotor = new TalonSRX(Constants.FEEDER_MOTOR_ID);
         feedMotor.setInverted(true);
     }
 
+    /**
+     * call me in robotperiodic pls
+     */
+    public void updateBallCount()
+    {
+        int count = 0;
+        if(!bottom.get()) {
+            count++;
+        }
+        if(!middle.get()) {
+            count++;
+        }
+        if(!top.get()) {
+            count++;
+        }
+        numBalls = count;
+        
+        SmartDashboard.putNumber("balls", numBalls);
+    }
+
+    /**
+     * numballs determine highest triggered sensor?
+     * Just for feeder
+     */
+    public void addBall()
+    {
+        switch(numBalls)
+        {
+        
+            case 0:
+                if(bottom.get())    //  if there's no ball at the bottom
+                    feed();
+                break;
+            case 1:
+                if(middle.get())
+                    feed();
+                break;
+            case 2:
+                if(top.get())
+                    feed();
+                break;
+            default:
+                break;
+        }
+    }
+    
+
+//stuff that works VVV
     /**
      * turns on the feeder
      */
     public void feed()
     {
-        feedMotor.set(ControlMode.PercentOutput, 1);
+        feed(0.2);
     }
 
     /**
@@ -36,7 +94,7 @@ public class Feeder
      */
     public void feed(double power)
     {
-        feedMotor.set(ControlMode.PercentOutput, 1);
+        feedMotor.set(ControlMode.PercentOutput, power);
         //gian wrote this beautifully crafted method
         // 😎✔✔ :^)
     }

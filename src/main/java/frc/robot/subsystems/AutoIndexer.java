@@ -5,47 +5,89 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class AutoIndexer {
     
     public AutoIndexer() {
-        DigitalInput input1 = new DigitalInput(0); //1-3 is lowest to highest in the feeder
-        DigitalInput input2 = new DigitalInput(1);
-        DigitalInput input3 = new DigitalInput(2);
+        DigitalInput bottom = new DigitalInput(0); 
+        DigitalInput middle = new DigitalInput(1);
+        DigitalInput top = new DigitalInput(2);
     }
 
     /*
     if(input2.get() && input1.get() && !input3.get()) {
         turn on motor to push power cells
     }
-    
-
+        
+x`
 
     }
     */
-    /*
     public void AutoIndexerFull(){
         if(!input3.get() && !input1.get()){
             //turns on shooter until it's empty of powercells
             while(input1.get()) {
             //turn on shooter...
-            }
+            } 
         }
         else{
             //keep intaking...
         }
         if(!input2)
     }
-    */
     
 
-/*
-    	|		
-        | input3
-		|  
-		|	
-        |
-        | input2
+/* 0-2 balls
+    |		
+    | top true
+    |  
+    |	
+    |
+    | middle true
+    |       
+    |	
+    |
+    | bottom true              ball(s) over here
+    |___________________
+*/
+
+
+
+/* 3 balls
+    |		
+    | top   TRUE
+    |  
+    |	
+    |
+    | middle TRUE
+    |       
+    |	
+    |
+    | bottom FALSE
+    |___________________
+*/
+
+/*   4 balls
+    |		
+    | top True
+    |  
+    |	
+    |
+    | middle False
         |       
-		|	
-		|
-        | input1
-		|___________________
+    |	
+    |
+    | bottom False
+    |___________________
+*/
+
+/*    5 balls  
+    |		
+    | top False
+    |  
+    |	
+    |
+    | middle False
+    |       
+    |	
+    |
+    | bottom False
+    |___________________
 */
 }
