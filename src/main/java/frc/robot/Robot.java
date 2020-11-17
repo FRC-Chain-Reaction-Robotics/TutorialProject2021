@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
   ControlPanel controlPanel = new ControlPanel();
   Limelight ll = new Limelight();
   Drivetrain dt = new Drivetrain(ll);
+
+  Timer timer = new Timer();
   
   /**
    * This function is run when the robot is first started up and should be
@@ -72,9 +74,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
+    m_autoSeleccted = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    timer.start();
   }
 
   /**
@@ -82,15 +85,62 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
+    
+    /* ideas?
+
+      ways to get points:
+        - shoot power cells into goal - 6pts inner, 4pts outer, 2pts lower (lower goal is irrelevant tho)
+        - move off 10ft line(init line) - 5pts
+        - moving other robots - 5pts per buddy you move
+        -(you can only shoot into goal and move off line for points in auto) 
+
+        example:
+        Total 15 seconds
+          x - x seconds: 
+            what do /// 
+           Idea 1:
+          0 - 4 seconds: move off the init line while ramping up wheel
+            - DriveTrain: public void drive(some int, some int)//methods(s)
+            - LightLimeLight: //methods(s)
+          4 - 10 seconds:  shoot loaded power cells
+            - Feeder: //method(s)
+            - Shooter: //method(s)
+          10 - 15 seconds: 
+          
+          Idea 2:
+
+      //private static final double _kYesBallPresentDistanceIswithinourspecifieddistancetoreconizeitasaballwithinthesensorwewant = 0.5;   //  inches
+
+
+                            robot1            
+          (init line)---------||----------
+                            robot2
+          
+    */
+    if (timer.get() < 4)
+    {
+      shooterControl.shoot(); 
     }
+    else if(timer.get() < 10) 
+    {
+      //intakeControl.intake();
+      feedControl.feed();
+      shooterControl.shoot();
+    }
+    else if(timer.get() < 15)
+    {
+      dt.drive(-1, 0); 
+    }
+
+    // switch (m_autoSelected) {
+    //   case kCustomAuto:
+    //     // Put custom auto code here
+    //     break;
+    //   case kDefaultAuto:
+    //   default:
+    //     // Put default auto code here
+    //     break;
+    // }
   }
 
   /**
