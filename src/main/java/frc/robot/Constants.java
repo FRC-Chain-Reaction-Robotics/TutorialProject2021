@@ -23,4 +23,6 @@ public class Constants
     public final static int LEFT_SHOOTER_MOTOR_ID = 2;
     
 	public final static Port COLOR_SENSOR_ID = Port.kOnboard;
+    
+    public static final double kEncoderDistancePerPulse = 69_420;   // TODO: Tune this value
 }

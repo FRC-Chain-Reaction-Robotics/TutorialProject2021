@@ -19,18 +19,18 @@ x`
 
     }
     */
-    public void AutoIndexerFull(){
-        if(!input3.get() && !input1.get()){
-            //turns on shooter until it's empty of powercells
-            while(input1.get()) {
-            //turn on shooter...
-            } 
-        }
-        else{
-            //keep intaking...
-        }
-        if(!input2)
-    }
+    // public void AutoIndexerFull(){
+    //     if(!input3.get() && !input1.get()){
+    //         //turns on shooter until it's empty of powercells
+    //         while(input1.get()) {
+    //         //turn on shooter...
+    //         } 
+    //     }
+    //     else{
+    //         //keep intaking...
+    //     }
+    //     if(!input2)
+    // }
     
 
 /* 0-2 balls
