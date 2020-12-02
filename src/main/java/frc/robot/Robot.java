@@ -38,8 +38,8 @@ public class Robot extends TimedRobot {
   Feeder feedControl = new Feeder();
   ControlPanel controlPanel = new ControlPanel();
   Limelight ll = new Limelight();
-  Drivetrain dt = new Drivetrain(ll);
-
+  // Drivetrain dt = new Drivetrain(ll);
+        Mecanum dt = new Mecanum(ll);
   Timer timer = new Timer();
   
   /**
@@ -129,7 +129,7 @@ public class Robot extends TimedRobot {
     }
     else if(timer.get() < 15)
     {
-      dt.drive(-1, 0); 
+      // dt.drive(-1, 0); 
     }
 
     // switch (m_autoSelected) {
@@ -168,12 +168,14 @@ public class Robot extends TimedRobot {
       
     if (operatorController.getBButton())
     {
-        dt.aim();
-        // shooterControl.shoot();
+        // dt.aim();
+        shooterControl.shoot();
     }
     else
     {
-      dt.drive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight));
+      dt.drive( driverController.getX(Hand.kLeft),
+                driverController.getY(Hand.kLeft),
+               -driverController.getX(Hand.kRight));
       shooterControl.stopShooter();
     }
   
