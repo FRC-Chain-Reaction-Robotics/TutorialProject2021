@@ -1,3 +1,4 @@
+package frc.robot.subsystems;
 
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.*;
 
@@ -20,30 +21,29 @@ import frc.robot.Constants;
 
 public class Drivetrain 
 {
-    private static CANSparkMax lf = new CANSparkMax(Constants.LF_MOTOR_ID, kBrushless);
-    private static CANSparkMax lm = new CANSparkMax(Constants.LM_MOTOR_ID, kBrushless);
-    private static CANSparkMax lb = new CANSparkMax(Constants.LB_MOTOR_ID, kBrushless);
-    private static CANSparkMax rf = new CANSparkMax(Constants.RF_MOTOR_ID, kBrushless);
-    private static CANSparkMax rm = new CANSparkMax(Constants.RM_MOTOR_ID, kBrushless);
-    private static CANSparkMax rb = new CANSparkMax(Constants.RB_MOTOR_ID, kBrushless);
+  private static CANSparkMax lf = new CANSparkMax(Constants.LF_MOTOR_ID, kBrushless);
+  private static CANSparkMax lm = new CANSparkMax(Constants.LM_MOTOR_ID, kBrushless);
+  private static CANSparkMax lb = new CANSparkMax(Constants.LB_MOTOR_ID, kBrushless);
+  private static CANSparkMax rf = new CANSparkMax(Constants.RF_MOTOR_ID, kBrushless);
+  private static CANSparkMax rm = new CANSparkMax(Constants.RM_MOTOR_ID, kBrushless);
+  private static CANSparkMax rb = new CANSparkMax(Constants.RB_MOTOR_ID, kBrushless);
 
-    private static SpeedControllerGroup leftSide = new SpeedControllerGroup(lb, lm, lf);
-    private static SpeedControllerGroup rightSide = new SpeedControllerGroup(rb, rm, rf);
+  private static SpeedControllerGroup leftSide = new SpeedControllerGroup(lb, lm, lf);
+  private static SpeedControllerGroup rightSide = new SpeedControllerGroup(rb, rm, rf);
 
-    DifferentialDrive dt = new DifferentialDrive(leftSide, rightSide);
-    Limelight limelight; 
-    
-    public Drivetrain(Limelight limelight) {
-      this.limelight = limelight;
-      dt.setMaxOutput(0.5);
-    }
-    
-    //TODO: @joshua tankdrive or arcadedrive??
-    public void drive(double xSpeed, double zRotation) {
-      dt.arcadeDrive(xSpeed, zRotation);
-    }
+  DifferentialDrive dt = new DifferentialDrive(leftSide, rightSide);
+  Limelight limelight;
+  
+  public Drivetrain(Limelight limelight) {
+    this.limelight = limelight;
+    dt.setMaxOutput(0.5);
+  }
+  
+  public void drive(double xSpeed, double zRotation) {
+    dt.arcadeDrive(xSpeed, zRotation);
+  }
 
-    public void driveSlow(double xSpeed, double zRotation){
-      drive(0.5 * xSpeed, zRotation);
-    }
+  public void driveSlow(double xSpeed, double zRotation){
+    drive(0.5 * xSpeed, zRotation);
+  }
 }

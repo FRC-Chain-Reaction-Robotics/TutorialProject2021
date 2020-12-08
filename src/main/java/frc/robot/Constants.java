@@ -11,5 +11,9 @@ public class Constants
     public static final int RM_MOTOR_ID = 7;
     public static final int RB_MOTOR_ID = 8;
     public static final int RIGHT_LIFT_MOTOR_ID = 9;
-    public static final int LEFT_LIFT_MOTOR_ID = 10;    
+    public static final int LEFT_LIFT_MOTOR_ID = 10;
+    public static final int SHOOTER_LIFT_MOTOR_ID = 11;
+    public static final int LEFT_SHOOTER_MOTOR_ID = 12;
+    public static final int RIGHT_SHOOTER_MOTOR_ID = 13;    
+    public static final int RAMP_MOTOR_ID = 14;
 }
