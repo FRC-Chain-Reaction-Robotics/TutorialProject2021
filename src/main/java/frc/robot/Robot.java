@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   ControlPanel controlPanel = new ControlPanel();
   Limelight ll = new Limelight();
   // Drivetrain dt = new Drivetrain(ll);
-        Mecanum dt = new Mecanum(ll);
+        Mecanum dt = new Mecanum();
   Timer timer = new Timer();
   
   /**
@@ -59,6 +59,7 @@ public class Robot extends TimedRobot {
     // if(controlPanel.gameColor == null)
       // controlPanel.getGameColor();
     ll.Update();
+    dt.updateOdometry();
   }
 
   /**
