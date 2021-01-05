@@ -5,46 +5,81 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-// Names:
-/*
-  Jacob Lewis
-  Zane Badgett
-  Joshua P
-  Arrio Gonsalves
-  Zayaan Rahman
-  Neeka Lin
-  Gabriel Rivera
-  Fernando Tovar
-  Matthew Metta
-*/
-
-
 package frc.robot;
-
-import edu.wpi.first.wpilibj.*;
-
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import static edu.wpi.first.wpilibj.GenericHID.Hand.*;
+import frc.robot.subsystems.*;
 
-public class Robot extends TimedRobot {
-  private static PWMVictorSPX lf = new PWMVictorSPX(Constants.LF_MOTOR_ID);
-  private static PWMVictorSPX lb = new PWMVictorSPX(Constants.LB_MOTOR_ID);
-  private static PWMVictorSPX rf = new PWMVictorSPX(Constants.RF_MOTOR_ID);
-  private static PWMVictorSPX rb = new PWMVictorSPX(Constants.RB_MOTOR_ID);
-  
-  private static SpeedControllerGroup leftSide = new SpeedControllerGroup(lf, lb);
-  private static SpeedControllerGroup rightSide = new SpeedControllerGroup(rf, rb);
+public class Robot extends TimedRobot
+{
+	XboxController operatorController = new XboxController(1);
+	XboxController driverController = new XboxController(0);
+	
+	Intake intaker = new Intake();
+	Limelight ll = new Limelight();
+	Drivetrain dt = new Drivetrain(ll); 
+	Lift lift = new Lift();
+	Ramp r = new Ramp();
+	Shooter shooter = new Shooter();
+	
+	@Override
+	public void teleopPeriodic()
+	{
+		//Manages intake components
+		if (operatorController.getAButton())
+			intaker.IntakeStart();	
+		else
+			intaker.IntakeStop();
 
-  DifferentialDrive dt = new DifferentialDrive(leftSide, rightSide);
-  XboxController driverController = new XboxController(0);
+		//Slows down if holding trigger
+		if(driverController.getBumper(kLeft))
+			dt.driveSlow(driverController.getY(kLeft), -driverController.getX(kRight));
+		else
+			dt.drive(driverController.getX(kLeft), -driverController.getX(kRight));
+			   
+		if(operatorController.getPOV() == 0)
+			lift.raiseLift();
+		else if(operatorController.getPOV() == 180)
+			lift.lowerLift();
+		else
+			lift.stopLift();
+		
+		if(driverController.getBumper(kRight))
+			r.pushTime(0.5, 2.0);	
+		
+		if(operatorController.get/**button */)
+			shooter.liftShooter();
+		else
+			shooter.lowerShooter();
+			//cuz i feel lik one button should both lift n shoot u know? //ok lets go back to Shooter.java or not idk 
+			//le ts do ii m yea, we need some method to like determine when to lift then shoot, all in one button though
+			//this is fancy timer stuff right.imma rewatch the vidwait
+			//same ok
+			//what is the difference between lift motor and shoot motor:: lift brings it at the angle
+			//ok how about we find when the lift stops lifting, and gets to the desired angle, then shoot
+			//we could do psuedo code for the time and bs it
+			//so doesnt limelight determine the angle to lift to 
+			
+			/** PSEUDO CODE:
+			we need to figure out how to use limelight with the lift
+			angle = getTy() <-- this is the angle the lift motor will lift to
+			does the angle it needs to lift to not vary
+			it does, that's why we need the limelight
+			oh
+			
+			
 
-  @Override
-  public void teleopPeriodic()
-  {
-    dt.arcadeDrive(driverController.getY(Hand.kLeft), driverController.getX(Hand.kRight));
-  }
+yea MOVE TO SHOOOTER CLASS EVERYONE
+
+			
+			 */  
+		if(operatorController.getBButton())
+			shooter.shoot();
+			
+		else
+			shooter.stop(); 
+
+	}
 }
