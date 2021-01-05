@@ -4,13 +4,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
-/**
- * A one motor subsystem with a fast mode and a slow mode.
- */
 public class Feeder 
 {
     TalonSRX feedMotor = new TalonSRX(Constants.FEEDER_MOTOR_ID);

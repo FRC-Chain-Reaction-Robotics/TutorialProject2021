@@ -12,9 +12,8 @@ public class Constants
     public final static int FEEDER_MOTOR_ID = 12;
     public final static int CONTROL_MOTOR_ID = 69_420;
     public final static int INTAKE_MOTOR_ID = 3;
-    public final static int LIFT_MOTOR_ID = 69_420; //lift 1 2 and 3 doesn't exist yet
-    public final static int LIFT_MOTOR2_ID = 69_420;
-    public final static int LIFT_MOTOR3_ID = 69_420;
+    public final static int LIFT_LEFT_MOTOR_ID = 69_420;
+    public final static int LIFT_RIGHT_MOTOR_ID = 69_420;
 
     public final static int LEFT_HOPPER_MOTOR_ID = 5;
     public final static int RIGHT_HOPPER_MOTOR_ID = 4;

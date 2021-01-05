@@ -41,7 +41,7 @@ public class Drivetrain {
 
     Limelight limelight;
 
-    PIDController aimPID = new PIDController(0., 0, 0);
+    PIDController aimPID = new PIDController(0.1, 0, 0);
     PIDController distPID = new PIDController(0.1, 0, 0);
 
     // --- Below this is for trajectories and stuff lol

@@ -23,31 +23,39 @@ import frc.robot.subsystems.*;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends TimedRobot
+{
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   XboxController driverController = new XboxController(0);
-  XboxController operatorController = new XboxController(1);  
+  XboxController operatorController = new XboxController(1);
   
   Lift liftControl;
   Intake intakeControl = new Intake();
   Shooter shooterControl = new Shooter();
   Feeder feedControl = new Feeder();
-  ControlPanel controlPanel = new ControlPanel();
+  // ControlPanel controlPanel = new ControlPanel();
   Limelight ll = new Limelight();
   // Drivetrain dt = new Drivetrain(ll);
-        Mecanum dt = new Mecanum();
-  Timer timer = new Timer();
+  Mecanum dt = new Mecanum(ll);
+  Timer autoTimer = new Timer();
   
+  @Override
+  public void disabledInit()
+  {
+    dt.resetPose();  
+  }
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
-  public void robotInit() {
+  public void robotInit()
+  {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -60,6 +68,10 @@ public class Robot extends TimedRobot {
       // controlPanel.getGameColor();
     ll.Update();
     dt.updateOdometry();
+    shooterControl.robotPeriodic();
+    SmartDashboard.putNumber("x", dt.getLocation().getTranslation().getX());
+    SmartDashboard.putNumber("y", dt.getLocation().getTranslation().getY());
+    SmartDashboard.putNumber("rot", dt.getLocation().getRotation().getDegrees());
   }
 
   /**
@@ -78,7 +90,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-    timer.start();
+    autoTimer.start();
   }
 
   /**
@@ -118,17 +130,17 @@ public class Robot extends TimedRobot {
                             robot2
           
     */
-    if (timer.get() < 4)
+    if (autoTimer.get() < 4)
     {
       shooterControl.shoot(); 
     }
-    else if(timer.get() < 10) 
+    else if(autoTimer.get() < 10) 
     {
       //intakeControl.intake();
       feedControl.feed();
       shooterControl.shoot();
     }
-    else if(timer.get() < 15)
+    else if(autoTimer.get() < 15)
     {
       // dt.drive(-1, 0); 
     }
@@ -154,8 +166,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("limelight ty", ll.getTy());
     SmartDashboard.putBoolean("limelight tv", ll.getTv());
     
-    SmartDashboard.putNumber("shooter rpm", shooterControl.getVelocity());
-    SmartDashboard.putNumber("shooter setpoint", shooterControl.getSetpoint());
+    // SmartDashboard.putNumber("shooter rpm", shooterControl.getVelocity());
+    // SmartDashboard.putNumber("shooter setpoint", shooterControl.getSetpoint());
 
     if (operatorController.getAButton())
       feedControl.feed();
@@ -165,11 +177,11 @@ public class Robot extends TimedRobot {
     if (operatorController.getXButton())
       intakeControl.intake();
     else
-      intakeControl.stopMotor();
+      intakeControl.stop();
       
     if (operatorController.getBButton())
     {
-        // dt.aim();
+        dt.aim();
         shooterControl.shoot();
     }
     else

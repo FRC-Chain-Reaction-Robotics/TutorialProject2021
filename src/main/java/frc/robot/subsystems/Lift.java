@@ -1,21 +1,21 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import static com.ctre.phoenix.motorcontrol.ControlMode.*;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-//imports here
 import frc.robot.Constants;
 
 public class Lift 
 {
-    CANSparkMax rightLiftMotor;
-    CANSparkMax leftLiftMotor;    
+    TalonSRX rightLiftMotor;
+    TalonSRX leftLiftMotor;    
 
     public Lift()
     {
-        rightLiftMotor = new CANSparkMax(Constants.LIFT_MOTOR_ID, MotorType.kBrushless);
-        leftLiftMotor = new CANSparkMax(Constants.LIFT_MOTOR2_ID, MotorType.kBrushless);
-        rightLiftMotor.follow(leftLiftMotor, true); //Will invert Right Motor
+        rightLiftMotor = new TalonSRX(Constants.LIFT_LEFT_MOTOR_ID);
+        leftLiftMotor = new TalonSRX(Constants.LIFT_RIGHT_MOTOR_ID);
+        rightLiftMotor.follow(leftLiftMotor);
+        rightLiftMotor.setInverted(true);
     }
     
     
@@ -24,7 +24,7 @@ public class Lift
      */
     public void lift()
     {
-        leftLiftMotor.set(0.5);
+        leftLiftMotor.set(PercentOutput, 0.5);
     }
 
     /**
@@ -32,7 +32,7 @@ public class Lift
      */
     public void stop()
     {
-        leftLiftMotor.set(0);
+        leftLiftMotor.set(PercentOutput, 0);
     }
     
      /**
@@ -40,7 +40,7 @@ public class Lift
       */
     public void reset()
     {
-        leftLiftMotor.set(-0.5); 
+        leftLiftMotor.set(PercentOutput, -0.5); 
     }
     
 }

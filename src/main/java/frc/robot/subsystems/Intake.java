@@ -7,47 +7,46 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants;
 
-public class Intake {
+public class Intake
+{
     CANSparkMax intakeMotor;
     CANSparkMax leftHopperMotor;
     TalonSRX rightHopperMotor;
     
-    /** 
-     * Constructs the intake motor 
-     */
-    public Intake() {
+    public Intake()
+    {
+        // TODO: Electrical: Use TalonSRXs for all of these, and make them followers as necessary
         intakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_ID, MotorType.kBrushed);
         leftHopperMotor = new CANSparkMax(Constants.LEFT_HOPPER_MOTOR_ID, MotorType.kBrushed);
         rightHopperMotor = new TalonSRX(Constants.RIGHT_HOPPER_MOTOR_ID);
-
+        intakeMotor.setInverted(false);
     }
 
     /**
      * Turns on the intake motor
-         */
+     */
     public void intake()
     {
-        intake(1);
-        //second method beautifully crafted by the one and only gian, absoulutely not basic java. advanced stuff.
+        intake(0.5);
     }
-        
+
+    /**
+    * turns off the intake
+    */   
+    public void stop()
+    {
+        intake(0);
+    }
+
     /**
     * Turns on the intake motor
     * @param power the specificed power
     */
     public void intake(double power)
     {
-        intakeMotor.set(-power*.5);
-        leftHopperMotor.set(-power*.5);
-        rightHopperMotor.set(ControlMode.PercentOutput, -power*.5);
-    }
-
-    /**
-    * turns off the intake
-    */   
-    public void stopMotor()
-    {
-        intake(0);
+        intakeMotor.set(power);
+        leftHopperMotor.set(power);
+        rightHopperMotor.set(ControlMode.PercentOutput, power);
     }
 }
 
