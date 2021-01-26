@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.*;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import frc.robot.Constants;
+
 public class Mecanum
 {
     private static CANSparkMax lf = new CANSparkMax(Constants.LF_MOTOR_ID, kBrushless);
@@ -53,7 +54,8 @@ public class Mecanum
     PIDController aimPID = new PIDController(0.01, 0, 0);
 
     Limelight ll;
-
+    CRRPixyWrapper pixy = new CRRPixyWrapper();
+    
     public Mecanum(Limelight l) 
     {
         ll = l;
@@ -89,9 +91,14 @@ public class Mecanum
         md.driveCartesian(xSpeed, ySpeed, zRotation);
     }
     
-    public void aim()
+    public void aimLL()
     {
         md.driveCartesian(0, 0, aimPID.calculate(ll.getTx(), 0));
+    }
+
+    public void aimPixy()
+    {
+        md.driveCartesian(0, 0, aimPID.calculate(pixy.getXError()));
     }
     
     public void followTrajectory(double time)
@@ -131,4 +138,43 @@ public class Mecanum
 	{
         Shuffleboard.getTab("Location: ").add((Sendable) m_gyro);
     }
-}
+
+
+    /* #region innacc */
+    public void goToPoint()
+    {
+        double[] nums = {5,10,15}; //placeholder values for desired ty values
+
+        md.driveCartesian(aimPID.calculate(ll.getTy(), findNearestValue(ll.getTy(),nums)), 0, aimPID.calculate(ll.getTx(), 0)); 
+    }
+
+    public double findNearestValue(double value, double[]nums)
+    {
+        int index = 0;
+        for(int i = 1; i < nums.length; i++)
+        {
+            if(Math.abs(value-nums[index]) < Math.abs(value-nums[index])) index = i;
+        }
+        return nums[index];
+    }
+    /* #endregion */
+
+
+    //you can probably just go ahead and put them in here, we can move later if we need to
+    //store list in this method or put it somewhere else cause idk what to do with variables sweet
+    //we already have an aim method in here, so tx is taken care of
+}//so what do we do with the ty points 
+//we need to figure out a way for the code to see the current ty, then move the bot to make the ty fit with one of the values we chose
+/**
+ * so we need to call getTy
+ * 
+ * 
+ * find closest value out of list of values?
+ * anyone know how to make it pick from a list like this?
+ * kinda
+ * 
+ * drivecartesion until Ty == targetTy
+ * 
+ * then KABOOM
+ * 
+ */  

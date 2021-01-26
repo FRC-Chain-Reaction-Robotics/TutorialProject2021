@@ -24,4 +24,7 @@ public class Constants
 	public final static Port COLOR_SENSOR_ID = Port.kOnboard;
     
     public static final double kEncoderDistancePerPulse = 69_420;   // TODO: Tune this value
+
+    public final static int ULTRA_SENSOR_ID_1 = 0;
+    public final static int ULTRA_SENSOR_ID_2 = 0;  //  TODO
 }

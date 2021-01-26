@@ -7,14 +7,21 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +50,10 @@ public class Robot extends TimedRobot
   Mecanum dt = new Mecanum(ll);
   Timer autoTimer = new Timer();
   
+	Ultrasonic us = new Ultrasonic(Constants.ULTRA_SENSOR_ID_1, Constants.ULTRA_SENSOR_ID_2);
+  
+  Trajectory trajectory;
+
   @Override
   public void disabledInit()
   {
@@ -58,6 +69,7 @@ public class Robot extends TimedRobot
   {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
+    m_chooser.addOption("Galactic Search", "galactic search");
     SmartDashboard.putData("Auto choices", m_chooser);
   }
 
@@ -90,7 +102,29 @@ public class Robot extends TimedRobot
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+
+    switch(m_autoSelected)
+    {
+      case "galatic search":
+        //choose autons here
+    }
+
     autoTimer.start();
+    
+    // = SmartDashboard.getNumber("Auton choice", 1);
+    
+    String trajectoryJSON = "";
+    if(us.getRangeInches() > 10)  // TODO: have no idea if it's supposed to be 10 or not but needs testing
+      trajectoryJSON = "paths/red.wpilib.json";
+    else
+      trajectoryJSON = "paths/blue.wpilib.json";
+    
+      try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    }
   }
 
   /**
@@ -181,7 +215,7 @@ public class Robot extends TimedRobot
       
     if (operatorController.getBButton())
     {
-        dt.aim();
+        dt.aimLL();
         shooterControl.shoot();
     }
     else
